@@ -1,0 +1,7 @@
+.gitignore
+.npmrc
+.nvmrc
+.prettierignore
+**/.DS_Store
+**/dist/**
+.treasuremap-data.json

@@ -1,0 +1,29 @@
+#! /bin/bash -e
+
+. $(dirname $0)/config.sh
+
+# Read in node version from nvmrc, ignoring anything that is not '.' or digits
+NODE_VERSION=$(cat .nvmrc | tr -cd 0-9.)
+NODE_MAJOR_VERSION="$(cut -d'.' -f1 <<<${NODE_VERSION})"
+DEBIAN_VERSION=bullseye
+
+if [[ $NODE_MAJOR_VERSION == "12" ]] ; then
+  DEBIAN_VERSION=buster
+fi
+
+echo "INFO: Building image"
+docker build \
+  --cache-from ${LATEST_TAG} \
+  --tag ${LATEST_TAG} \
+  --build-arg BUILDKIT_INLINE_CACHE=1 \
+  --build-arg NODE_VERSION=${NODE_VERSION} \
+  --build-arg DEBIAN_VERSION=${DEBIAN_VERSION} \
+  --build-arg MFE_NAME=${MFE_NAME} \
+  --file Dockerfile .
+
+if [ "${BUILDKITE:-}" = "true" ]; then
+  echo "INFO: Tagging and pushing ${NUMBERED_TAG}"
+  docker tag ${LATEST_TAG} ${NUMBERED_TAG}
+  docker push ${NUMBERED_TAG}
+  docker push ${LATEST_TAG}
+fi

@@ -1,0 +1,17 @@
+{
+  "group": "resi-property",
+  "name": "saved-properties-ui",
+  "entry": {
+    "home": "./src/index.tsx"
+  },
+  "routes": [
+    {
+      "path": "/welcome",
+      "entry": "home"
+    }
+  ],
+  "devInstance": "@realestate.com.au/argonaut",
+  "plugins": [
+    "@argonaut/cli-plugin-typescript"
+  ]
+}

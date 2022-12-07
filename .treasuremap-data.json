@@ -1,0 +1,22 @@
+{
+  "systems": {
+    "saved-properties-ui": {
+      "name": "saved-properties-ui",
+      "owner": "<owner>",
+      "supportDoc": "<1pager-link>",
+      "git": "<git-repo>",
+      "privacy": {
+        "piiData": {
+          "uses": [
+            "none"
+          ]
+        }
+      },
+      "dates": {
+        "birth": "2022-12-07T14:29:03+11:00"
+      },
+      "custodian": "<custodian>",
+      "division": "au"
+    }
+  }
+}

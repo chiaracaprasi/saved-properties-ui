@@ -1,0 +1,43 @@
+steps:
+  - name: ":round_pushpin: Bake Dependency"
+    key: dependencies
+    command: auto/base
+    agents:
+      queue: rea-artifacts:build
+    plugins:
+      - ssh://git@git.realestate.com.au/cowbell/ensure-ecr-buildkite-plugin#v2:
+          namespace: consumer-experience
+          regions:
+            - ap-southeast-2
+          repository: saved-properties-ui
+          lifecycle_policy:
+            retain_tagged_image_count: 200
+  - wait
+  - name: ":ocean: Prettier"
+    command: auto/prettier
+  - name: ":statue_of_liberty: Lint"
+    command: auto/lint
+  - name: ":mount_fuji: Unit Tests"
+    command: auto/unit-test
+  - name: ":world_map: Validating Treasuremap data"
+    plugins:
+      ssh://git@git.realestate.com.au/buildkite-plugin/treasuremap-shovel-buildkite-plugin#0.0.14:
+        push: false
+  - wait
+  - name: ":clinking_glasses: Development release"
+    branches: "!main"
+    command: auto/publish-to-dev
+    agents:
+      queue: cops-dev:deploy
+    concurrency_group: ${BUILDKITE_PIPELINE_SLUG}/publish-to-dev
+    concurrency: 1
+  - name: ":clinking_glasses: Production release"
+    branches: main
+    command: auto/deploy
+    concurrency_group: ${BUILDKITE_PIPELINE_SLUG}/deploy
+    concurrency: 1
+    retry:
+      manual:
+        permit_on_passed: true
+    agents:
+      queue: resi-property-prod:deploy

@@ -1,0 +1,13 @@
+#! /bin/bash -e
+
+cd $(dirname $0)/..
+
+. auto/config.sh
+
+if [ "${CI:-}" != "true" ]; then
+  auto/base
+fi
+
+trap "docker-compose down --volumes" 0
+
+docker-compose run --rm dev "${@-bash}"
