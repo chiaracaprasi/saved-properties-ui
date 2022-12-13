@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "strict": true
+  },
+  "include": [
+    "src/**/*",
+    "node_modules/@argonaut/cli-plugin-typescript/static/types.d.ts"
+  ]
+}
