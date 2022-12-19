@@ -28,11 +28,11 @@ const StyledCard = styled(Card)`
   padding: 10px;
 `;
 
-const Logo = styled.img `
+const Logo = styled.img`
   width: auto;
   height: 20px;
   max-width: 100%;
-`
+`;
 
 const StyledTitle = styled(Text)`
   font-weight: bold;
@@ -40,7 +40,7 @@ const StyledTitle = styled(Text)`
 `;
 
 const Banner = styled.div`
-  background-color: ${(props: {bgColor: string}) => props.bgColor};
+  background-color: ${(props: { bgColor: string }) => props.bgColor};
 `;
 
 const StyledButton = styled(Button)`
@@ -58,12 +58,11 @@ const ImgContainer = styled.div`
 
 const ButtonContainer = styled.div`
   position: absolute;
-  bottom: 20px; 
+  bottom: 20px;
   display: flex;
   justify-content: center;
   width: 100%;
-`
-
+`;
 
 const StyledImg = styled.img`
   object-fit: contain;
@@ -72,12 +71,9 @@ const StyledImg = styled.img`
   max-width: 100%;
 `;
 
-
-
 //   // position: absolute;
 //   // bottom: 15px;
 //   // transform: translate(50%, 0);
-
 
 const Screen: FunctionComponent = () => {
   // console.log(data);
@@ -88,9 +84,11 @@ const Screen: FunctionComponent = () => {
   // console.log(logo);
   const [data, setData] = useState(mockData);
   function addPropertyHandler() {
-     console.log("You clicked on Add Property")
+    console.log("You clicked on Add Property");
   }
-
+  function removePropertyHandler() {
+    console.log("You clicked on Remove Property");
+  }
   return (
     <Layout>
       <StyledInline>
@@ -105,7 +103,9 @@ const Screen: FunctionComponent = () => {
               <ImgContainer>
                 <StyledImg src={res.mainImage} />
                 <ButtonContainer>
-                <StyledButton onClick={addPropertyHandler}>Add Property</StyledButton>
+                  <StyledButton onClick={addPropertyHandler}>
+                    Add Property
+                  </StyledButton>
                 </ButtonContainer>
               </ImgContainer>
               <Text>Price: {res.price}</Text>
@@ -120,7 +120,12 @@ const Screen: FunctionComponent = () => {
                 <Logo src={res.agency.logo} />
                 {/* <Text>ID: {res.id}</Text> */}
               </Banner>
-              <StyledImg src={res.mainImage} />
+              <ImgContainer>
+                <StyledImg src={res.mainImage} />
+                <ButtonContainer>
+                  <StyledButton onClick={removePropertyHandler}>Remove Property</StyledButton>
+                </ButtonContainer>
+              </ImgContainer>
               <Text>Price: {res.price}</Text>
             </StyledCard>
           ))}
