@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import styled from "styled-components";
 import { Button, Card, Inline, Stack, Text, Strong } from "@construct-kit/core";
-import data from "./mockData";
+import mockData from "./mockData";
 
 const Layout = styled.main`
   margin: 1rem;
@@ -80,12 +80,16 @@ const StyledImg = styled.img`
 
 
 const Screen: FunctionComponent = () => {
-  console.log(data);
-  console.log(data.results);
-  const price = data.results.map((res) => res.price);
-  console.log(price);
-  const logo = data.results.map((res) => res.agency.logo);
-  console.log(logo);
+  // console.log(data);
+  // console.log(data.results);
+  // const price = data.results.map((res) => res.price);
+  // console.log(price);
+  // const logo = data.results.map((res) => res.agency.logo);
+  // console.log(logo);
+  const [data, setData] = useState(mockData);
+  function addPropertyHandler() {
+     console.log("You clicked on Add Property")
+  }
 
   return (
     <Layout>
@@ -101,7 +105,7 @@ const Screen: FunctionComponent = () => {
               <ImgContainer>
                 <StyledImg src={res.mainImage} />
                 <ButtonContainer>
-                <StyledButton>Add Property</StyledButton>
+                <StyledButton onClick={addPropertyHandler}>Add Property</StyledButton>
                 </ButtonContainer>
               </ImgContainer>
               <Text>Price: {res.price}</Text>
